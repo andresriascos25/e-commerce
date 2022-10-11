@@ -4,6 +4,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  padding-top: 120px;
 }
 
 *,
@@ -12,7 +13,12 @@ body {
   box-sizing: inherit;
 }
 
-header{
+.header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
   border-bottom: 1px solid rgba(230, 227, 227, 0.664);
 }
 a {
