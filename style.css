@@ -167,6 +167,10 @@ a {
   background-color: #ffbc93;
 }
 
+.select{
+  border: 3px solid gray;
+}
+
 .shopping-container{
   display: flex;
   justify-content: center;
@@ -301,17 +305,37 @@ input[type=number] {
 }
 
 .title-buy{
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 5px;
 }
 
-.price-buy{
+.size-color{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-buy{
+  width: 17px;
+  height: 17px;
+  
+  border-radius: 50%;
+}
+
+.size-buy{
+  font-size: 14px;
   margin: 10px;
 }
 
+.amount-buy{
+  display: flex;
+  align-items: center;
+  gap: 10px ;
+}
 
 .subtotal{
   font-size: 15px;
   font-weight: 400;
+  margin: 0;
 }
