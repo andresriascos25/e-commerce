@@ -21,12 +21,18 @@ body {
   background-color: white;
   border-bottom: 1px solid rgba(230, 227, 227, 0.664);
 }
-a {
+
+
+.nav-item{
   font-size: 14px;
   text-decoration: none;
   color: black;
 }
 
+button{
+  padding: 0;
+  cursor: pointer;
+}
 
 .sub-first-container {
   height: 80px;
@@ -40,6 +46,10 @@ a {
 .sub-first-container button{
   border: none;
   background-color: white;
+}
+
+.img-first-container{
+  position: relative;
 }
 .img-first-container img {
   width: 30px;
@@ -152,6 +162,7 @@ a {
   border-radius: 50%;
   box-sizing: border-box;
   cursor: pointer;
+  outline: none;
 }
 
 .color:hover{
@@ -173,6 +184,10 @@ a {
   border: 3px solid gray;
 }
 
+.select:hover{
+  border: 3px solid gray;
+}
+
 .shopping-container{
   display: flex;
   justify-content: center;
@@ -185,9 +200,21 @@ a {
   border: 1px solid gray;
 }
 
-button{
-  padding: 0;
-  cursor: pointer;
+
+
+#carCounter{
+position: absolute;
+display: grid;
+place-content: center;
+width:20px;
+height: 20px;
+right: 0;
+top: 0;
+background-color: red;
+color: white;
+border-radius: 50%;
+transform: translate(50%, -50%);
+
 }
 
 .button-menos{
@@ -231,7 +258,8 @@ input[type=number] {
 }
 
 .add:hover{
-  background-color: aqua;
+  background-color: rgb(13,124,129);
+  color: white;
 }
 
 .modal-container {
@@ -331,14 +359,29 @@ input[type=number] {
 
 .amount-buy{
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px ;
 }
 
+.amount-buy div p{
+  margin: 10px 0;
+}
+
+.amount-cls{
+  display: flex;
+  gap: 10px;
+}
 .subtotal{
   font-size: 15px;
   font-weight: 400;
-  margin: 0;
+  margin: 5px 0;
+}
+
+.cls{
+  width: 20px;
+  height: 20px;
+
 }
 
 
@@ -372,7 +415,17 @@ input[type=number] {
     padding-bottom: 20px;
   }
   .navbar{
-    display: none;
+    /* display: none; */
+  padding: 0 20px;
+    width: 100%;
+    justify-content:flex-start;
+    overflow: auto;
+    box-sizing: border-box;
+  }
+
+  .nav-item{
+    display: block;
+    flex-shrink: 0;
   }
 
   .linea{

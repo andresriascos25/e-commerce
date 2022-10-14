@@ -3,6 +3,7 @@ const abrir = document.querySelector(".button");
 const modal = document.querySelector(".modal");
 const modalC = document.querySelector(".modal-container");
 const select=document.querySelector('.select');
+const cartCounterElement= document.querySelector('#carCounter');
 
 const add = document.querySelectorAll(".add");
 const containerBuy = document.querySelector(".container-buy");
@@ -16,13 +17,22 @@ const counterDown= document.querySelectorAll(".button-menos");
 const size= document.querySelectorAll(".size");
 const colorBlack=document.querySelectorAll(".black");
 const colorSkin=document.querySelectorAll(".skin");
+const clear= document.querySelectorAll('.cls');
 
 let arrays = [];
 let arrayTotal = [];
 let amount = 1;
 let total = 0;
 let color='black';
+let sizeBuy='';
+let elements=[];
+let cartCount = 0;
 /* let colorBuy='black'; */
+      
+
+// When the page loads     
+init();
+
 
 for (let i = 0; i < add.length; i++) {
   add[i].addEventListener('click', () => {
@@ -36,22 +46,22 @@ for (let i = 0; i < add.length; i++) {
       colorBuy=color;
       total += subtotal;
       //arrayTotal.push(subtotal);
-      arrays.push({ titulo, priceBuy, subtotal, amount, imgBuy , colorBuy });
-      const elements = arrays.map((array) => {
+      arrays.push({ titulo, priceBuy,pBuy, subtotal, amount, imgBuy , colorBuy, sizeBuy });
+      updateLocalCart(arrays);
+      elements = arrays.map((array) => {
         return `
         <div class="elemento">
           <img class="img-buy" src="${array.imgBuy}" alt="">
           <div>
             <h4 class="title-buy">${array.titulo}</h4>
             <div class="size-color">
-              <p class="size-buy">Talla:M</p>
+              <p class="size-buy">Talla:${array.sizeBuy}</p>
               <div class="color-buy ${array.colorBuy}"></div>
             </div>
             <div class="amount-buy">
-              <div>
-                <button class="button-menos">-</button>
-                <input type="number" min="1" value="${array.amount}" class="amount">
-                <button class="button-mas ">+</button>
+              <div class="amount-cls">
+                <p>Cantidad:${array.amount}</p>
+                <button data-price="${array.pBuy}" class="cls">Br</button>
               </div>
               <p class="subtotal">${array.priceBuy}</p>
             </div>
@@ -60,94 +70,31 @@ for (let i = 0; i < add.length; i++) {
     `;
       });
       textTotal.innerHTML = `Total:$${total}`;
+      cartCount = arrays.length;
+      cartCounterElement.textContent = cartCount;
       containerBuy.innerHTML = elements.join("");
-      
+      removeBuy();
     }
-
-
-
   });
 }
 
-/* <div class="elemento">
-      <img class="img-buy" src="${array.imgBuy}" alt="">
-      <div >
-        <h4 class="title-buy">${array.titulo}</h4>
-        <p class="price-buy">${array.priceBuy}</p>
-        <div class="amount-buy">
-              <button class="button-menos">-</button>
-              <input type="number" min="1" value="${array.amount}" class="amount">
-              <button class="button-mas">+</button>
-              <p class="subtotal">Subtotal:$${array.subtotal}</p>
-            </div>
-      </div>
-    </div> */
-
-
-
-/* for(let i=0; i<amountBuy.length; i++){
-
-  amountBuy[i].addEventListener('input', (e) =>{
-    if(amountBuy[i].value != ''){
-      add[i].addEventListener('click', () => {
-        amount=amountBuy[i].value;
-        const titulo=titleTarget[i].textContent;
-        const priceBuy= priceTarget[i].textContent;
-        const pBuy=priceBuy.replace('.','').replace('$','');
-        const subtotal= Number(pBuy)*amount;
-        array.push({titulo,priceBuy,subtotal,amount});
-        console.log(array);       
-      })
-    }
-  });
-} */
-
-
-
-
-/* let arrays=[];
-let precioItem=undefined;
-let amountBuy=undefined;
-let total=0;
-
-
-for(let i=0; i<add.length; i++){ 
-
-
-  add[i].addEventListener('click', (e) => {
-    const titulo=titleTarget[i].textContent;
-    const precio= priceTarget[i].textContent;
-    amountBuy= valor[i].value;
-    const subtotal=precioItem*amountBuy;
-    cantidad = precio.replace('$','');
-    precioItem = cantidad.replace('.','');
-    
-    arrays.push({titulo,precio,subtotal});
-    const elements= arrays.map((array) => {
-      return `<div class="elemento">
-      <img class="img-buy" src="./assets/clasica1.jpg" alt="">
-      <div >
-        <h4 class="title-buy">${array.titulo}</h4>
-        <p class="price-buy">${array.precio}</p>
-        <div class="amount-buy">
-              <button class="button-menos">-</button>
-              <input type="number" min="1" value="1" class="amount">
-              <button class="button-mas">+</button>
-              <p class="subtotal">Subtotal:${array.subtotal}</p>
-            </div>
-      </div>
-    </div>`;
-    });
-    containerBuy.innerHTML= elements.join("");
-  });
-
-} */
-
-/* add.addEventListener('click', (e) => {
-const square= document.createElement('div');
-  square.setAttribute('class','square');
-  containerBuy.appendChild(square);
-}) */
+function removeBuy () {
+  const clear= document.querySelectorAll('.cls');
+  for(let i=0; i<clear.length; i++){
+    clear[i].addEventListener('click', (e) => {
+      const price = e.target.dataset.price;
+      arrays.splice(i, 1);
+      elements.splice(i,1);
+      containerBuy.innerHTML = elements.join("");
+      total=total-Number(price);
+      textTotal.innerHTML = `Total:$${total}`;
+      cartCount = arrays.length;
+      cartCounterElement.textContent = cartCount;
+      updateLocalCart(arrays);
+      removeBuy();
+    })
+  }
+}
 
 abrir.addEventListener('click', (e) => {
   modalC.style.opacity = '1';
@@ -203,4 +150,63 @@ for(let i=0; i<counterDown.length; i++){
   })
 } 
 
+for(let i=0; i<size.length; i++){
 
+  size[i].addEventListener('click', () => {
+    sizeBuy=size[i].textContent;
+   console.log(size[i].textContent);
+  })
+
+}
+
+function init() {
+  arrays = getLocalCart();
+  elements = arrays.map((array) => {
+    return `
+    <div class="elemento">
+      <img class="img-buy" src="${array.imgBuy}" alt="">
+      <div>
+        <h4 class="title-buy">${array.titulo}</h4>
+        <div class="size-color">
+          <p class="size-buy">Talla:${array.sizeBuy}</p>
+          <div class="color-buy ${array.colorBuy}"></div>
+        </div>
+        <div class="amount-buy">
+          <div class="amount-cls">
+            <p>Cantidad:${array.amount}</p>
+            <button data-price="${array.pBuy}" class="cls">Br</button>
+          </div>
+          <p class="subtotal">${array.priceBuy}</p>
+        </div>
+      </div>
+    </div>
+`;
+  });
+  containerBuy.innerHTML = elements.join("");
+  removeBuy();
+  const items = document.querySelectorAll('.cls');
+  total = 0;
+  cartCount = arrays.length;
+
+  items.forEach((item) => {
+    const priceString = item.dataset.price;
+    const price = parseInt(priceString);
+    total += price;
+  });
+  cartCounterElement.textContent = cartCount;
+  textTotal.innerHTML = `Total:$${total}`;
+}
+
+
+function updateLocalCart(cart) {
+  const data = JSON.stringify(cart);
+  localStorage.setItem('cart', data);
+}
+
+function getLocalCart() {
+  const data = localStorage.getItem('cart');
+  if (!data) {
+    return [];
+  }
+  return JSON.parse(data);
+}
