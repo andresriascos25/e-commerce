@@ -14,10 +14,12 @@ const imageBuy = document.querySelectorAll(".img-target");
 const textTotal = document.querySelector(".text-total");
 const counterUp= document.querySelectorAll(".button-mas");
 const counterDown= document.querySelectorAll(".button-menos");
-const size= document.querySelectorAll(".size");
+const sizeSm= document.querySelectorAll(".size-sm");
+const sizeLxl= document.querySelectorAll(".size-lxl");
 const colorBlack=document.querySelectorAll(".black");
 const colorSkin=document.querySelectorAll(".skin");
 const clear= document.querySelectorAll('.cls');
+const imgCls= document.querySelectorAll('.img-cls');
 
 let arrays = [];
 let arrayTotal = [];
@@ -37,7 +39,7 @@ init();
 for (let i = 0; i < add.length; i++) {
   add[i].addEventListener('click', () => {
     amount = amountBuy[i].value;
-    if (amount != '') {
+    if (amount != '' ) {
       const titulo = titleTarget[i].textContent;
       const priceBuy = priceTarget[i].textContent;
       const pBuy = priceBuy.replace('.', '').replace('$', '');
@@ -45,7 +47,6 @@ for (let i = 0; i < add.length; i++) {
       const imgBuy = imageBuy[i].src;
       colorBuy=color;
       total += subtotal;
-      //arrayTotal.push(subtotal);
       arrays.push({ titulo, priceBuy,pBuy, subtotal, amount, imgBuy , colorBuy, sizeBuy });
       updateLocalCart(arrays);
       elements = arrays.map((array) => {
@@ -55,13 +56,15 @@ for (let i = 0; i < add.length; i++) {
           <div>
             <h4 class="title-buy">${array.titulo}</h4>
             <div class="size-color">
-              <p class="size-buy">Talla:${array.sizeBuy}</p>
+              <p class="size-buy">Talla: ${array.sizeBuy}</p>
               <div class="color-buy ${array.colorBuy}"></div>
             </div>
             <div class="amount-buy">
               <div class="amount-cls">
                 <p>Cantidad:${array.amount}</p>
-                <button data-price="${array.pBuy}" class="cls">Br</button>
+                <button data-price="${array.pBuy}" class="cls">
+                eliminar
+                </button>
               </div>
               <p class="subtotal">${array.priceBuy}</p>
             </div>
@@ -150,11 +153,30 @@ for(let i=0; i<counterDown.length; i++){
   })
 } 
 
-for(let i=0; i<size.length; i++){
+for(let i=0; i<sizeSm.length; i++){
 
-  size[i].addEventListener('click', () => {
-    sizeBuy=size[i].textContent;
-   console.log(size[i].textContent);
+  sizeSm[i].addEventListener('click', () => {
+    if(sizeLxl[i].classList.contains('select')){
+      sizeLxl[i].classList.toggle('select');
+      sizeSm[i].classList.toggle('select');
+    }else{
+      sizeSm[i].classList.toggle('select');
+    }    
+    sizeBuy=sizeSm[i].textContent; 
+  })
+
+}
+
+for(let i=0; i<sizeLxl.length; i++){
+
+  sizeLxl[i].addEventListener('click', () => {
+    if(sizeSm[i].classList.contains('select')){
+      sizeSm[i].classList.toggle('select');
+      sizeLxl[i].classList.toggle('select');
+    }else{
+      sizeLxl[i].classList.toggle('select');
+    }    
+    sizeBuy=sizeLxl[i].textContent;  
   })
 
 }
@@ -168,13 +190,15 @@ function init() {
       <div>
         <h4 class="title-buy">${array.titulo}</h4>
         <div class="size-color">
-          <p class="size-buy">Talla:${array.sizeBuy}</p>
+          <p class="size-buy">Talla: ${array.sizeBuy}</p>
           <div class="color-buy ${array.colorBuy}"></div>
         </div>
         <div class="amount-buy">
           <div class="amount-cls">
             <p>Cantidad:${array.amount}</p>
-            <button data-price="${array.pBuy}" class="cls">Br</button>
+            <button data-price="${array.pBuy}" class="cls">
+            eliminar
+            </button>
           </div>
           <p class="subtotal">${array.priceBuy}</p>
         </div>
